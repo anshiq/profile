@@ -68,8 +68,8 @@ url = "/notebook"
 
 
 [[params.menu]]
-name = "about"
-url = "/about"
+name = "CV"
+url = "/cv"
 
 # Syntax highlight on code blocks
 [markup]
