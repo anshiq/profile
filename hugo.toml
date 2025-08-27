@@ -22,7 +22,9 @@ hideHeader = false
 # homeIntroTitle = 'Hi!'
 homeIntroContent = """
 I am [Anshik Singh](/cv), a Software Engineer Intern at [SilverPush](https://www.silverpush.co/), currently based in India.  
-My interests span across **web development**, **blockchain**, and **system design**.  
+My interests span across **web development**, **blockchain**, and **system design**. 
+
+Go enthusiast, JavaScript pays the bills....
 
 To contact me directly, send an email to:  
 *[anshikthind at gmail dot com](mailto:anshikthind@gmail.com)*
