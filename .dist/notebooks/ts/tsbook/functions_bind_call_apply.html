@@ -1,0 +1,548 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Functions Bind,Call and Apply - Anshik Typescript</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Anshik Typescript</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="functions-bindcall-and-apply"><a class="header" href="#functions-bindcall-and-apply">Functions Bind,Call and Apply</a></h1>
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p><code>call()</code>, <code>apply()</code>, and <code>bind()</code> are JavaScript methods that allow you to control the <code>this</code> context of functions. They're essential for function borrowing, method chaining, and controlling execution context.</p>
+<h2 id="the-call-method"><a class="header" href="#the-call-method">The <code>call()</code> Method</a></h2>
+<h3 id="syntax"><a class="header" href="#syntax">Syntax</a></h3>
+<pre><code class="language-javascript">function.call(thisArg, arg1, arg2, ...)
+</code></pre>
+<h3 id="basic-example"><a class="header" href="#basic-example">Basic Example</a></h3>
+<pre><code class="language-javascript">const person = {
+  firstName: "John",
+  lastName: "Doe",
+  fullName: function () {
+    return this.firstName + " " + this.lastName;
+  },
+};
+
+const anotherPerson = {
+  firstName: "Jane",
+  lastName: "Smith",
+};
+
+// Using call to borrow the fullName method
+console.log(person.fullName.call(anotherPerson)); // "Jane Smith"
+</code></pre>
+<h3 id="example-with-arguments"><a class="header" href="#example-with-arguments">Example with Arguments</a></h3>
+<pre><code class="language-javascript">const calculator = {
+  multiply: function (a, b) {
+    return a * b * this.factor;
+  },
+};
+
+const config = { factor: 10 };
+
+// Using call with arguments
+const result = calculator.multiply.call(config, 5, 3);
+console.log(result); // 150 (5 * 3 * 10)
+</code></pre>
+<h3 id="practical-use-case---function-borrowing"><a class="header" href="#practical-use-case---function-borrowing">Practical Use Case - Function Borrowing</a></h3>
+<pre><code class="language-javascript">const arrayLike = {
+  0: "apple",
+  1: "banana",
+  2: "cherry",
+  length: 3,
+};
+
+// Borrowing Array methods
+const fruits = Array.prototype.slice.call(arrayLike);
+console.log(fruits); // ['apple', 'banana', 'cherry']
+
+// Converting NodeList to Array
+const divs = document.querySelectorAll("div");
+const divsArray = Array.prototype.slice.call(divs);
+</code></pre>
+<h2 id="the-apply-method"><a class="header" href="#the-apply-method">The <code>apply()</code> Method</a></h2>
+<h3 id="syntax-1"><a class="header" href="#syntax-1">Syntax</a></h3>
+<pre><code class="language-javascript">function.apply(thisArg, [argsArray])
+</code></pre>
+<h3 id="basic-example-1"><a class="header" href="#basic-example-1">Basic Example</a></h3>
+<pre><code class="language-javascript">const numbers = [1, 2, 3, 4, 5];
+
+// Finding maximum using Math.max with apply
+const max = Math.max.apply(null, numbers);
+console.log(max); // 5
+
+// Modern alternative with spread operator
+const maxModern = Math.max(...numbers);
+</code></pre>
+<h3 id="example-with-context"><a class="header" href="#example-with-context">Example with Context</a></h3>
+<pre><code class="language-javascript">const greetings = {
+  prefix: "Hello",
+  greet: function (name, punctuation) {
+    return `${this.prefix} ${name}${punctuation}`;
+  },
+};
+
+const formalGreeting = { prefix: "Good morning" };
+
+// Using apply with arguments array
+const message = greetings.greet.apply(formalGreeting, ["Mr. Johnson", "."]);
+console.log(message); // "Good morning Mr. Johnson."
+</code></pre>
+<h3 id="practical-use-case---array-operations"><a class="header" href="#practical-use-case---array-operations">Practical Use Case - Array Operations</a></h3>
+<pre><code class="language-javascript">const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+
+// Concatenating arrays using apply
+arr1.push.apply(arr1, arr2);
+console.log(arr1); // [1, 2, 3, 4, 5, 6]
+
+// Finding min/max in nested arrays
+const nestedArray = [
+  [1, 2],
+  [3, 4],
+  [5, 6],
+];
+const flattened = [].concat.apply([], nestedArray);
+console.log(flattened); // [1, 2, 3, 4, 5, 6]
+</code></pre>
+<h2 id="the-bind-method"><a class="header" href="#the-bind-method">The <code>bind()</code> Method</a></h2>
+<h3 id="syntax-2"><a class="header" href="#syntax-2">Syntax</a></h3>
+<pre><code class="language-javascript">function.bind(thisArg, arg1, arg2, ...)
+</code></pre>
+<h3 id="basic-example-2"><a class="header" href="#basic-example-2">Basic Example</a></h3>
+<pre><code class="language-javascript">const module = {
+  x: 42,
+  getX: function () {
+    return this.x;
+  },
+};
+
+const unboundGetX = module.getX;
+console.log(unboundGetX()); // undefined (this is not module)
+
+const boundGetX = unboundGetX.bind(module);
+console.log(boundGetX()); // 42
+</code></pre>
+<h3 id="event-handling-example"><a class="header" href="#event-handling-example">Event Handling Example</a></h3>
+<pre><code class="language-javascript">class Button {
+  constructor(element) {
+    this.element = element;
+    this.clickCount = 0;
+
+    // Binding ensures 'this' refers to the Button instance
+    this.element.addEventListener("click", this.handleClick.bind(this));
+  }
+
+  handleClick() {
+    this.clickCount++;
+    console.log(`Button clicked ${this.clickCount} times`);
+  }
+}
+
+const button = new Button(document.getElementById("myButton"));
+</code></pre>
+<h3 id="partial-application-currying"><a class="header" href="#partial-application-currying">Partial Application (Currying)</a></h3>
+<pre><code class="language-javascript">function multiply(a, b, c) {
+  return a * b * c;
+}
+
+// Creating a function with pre-filled arguments
+const multiplyByTwo = multiply.bind(null, 2);
+console.log(multiplyByTwo(3, 4)); // 24 (2 * 3 * 4)
+
+const multiplyByTwoAndThree = multiply.bind(null, 2, 3);
+console.log(multiplyByTwoAndThree(4)); // 24 (2 * 3 * 4)
+</code></pre>
+<h2 id="comparison-table"><a class="header" href="#comparison-table">Comparison Table</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>Returns</th><th>Arguments</th><th>Use Case</th></tr></thead><tbody>
+<tr><td><code>call()</code></td><td>Executes immediately</td><td>Individual arguments</td><td>Immediate execution with specific context</td></tr>
+<tr><td><code>apply()</code></td><td>Executes immediately</td><td>Array of arguments</td><td>Immediate execution with array arguments</td></tr>
+<tr><td><code>bind()</code></td><td>Returns new function</td><td>Individual arguments</td><td>Creating bound functions for later use</td></tr>
+</tbody></table>
+</div>
+<h2 id="advanced-examples"><a class="header" href="#advanced-examples">Advanced Examples</a></h2>
+<h3 id="method-chaining-with-different-contexts"><a class="header" href="#method-chaining-with-different-contexts">Method Chaining with Different Contexts</a></h3>
+<pre><code class="language-javascript">const logger = {
+  log: function (message) {
+    console.log(`[${this.level}]: ${message}`);
+    return this;
+  },
+};
+
+const errorLogger = { level: "ERROR" };
+const infoLogger = { level: "INFO" };
+
+// Creating bound methods
+const logError = logger.log.bind(errorLogger);
+const logInfo = logger.log.bind(infoLogger);
+
+logError("Something went wrong"); // [ERROR]: Something went wrong
+logInfo("Process completed"); // [INFO]: Process completed
+</code></pre>
+<h3 id="function-composition"><a class="header" href="#function-composition">Function Composition</a></h3>
+<pre><code class="language-javascript">const operations = {
+  add: function (a, b) {
+    return a + b;
+  },
+  multiply: function (a, b) {
+    return a * b;
+  },
+  chain: function (value) {
+    this.value = value;
+    return this;
+  },
+  result: function () {
+    return this.value;
+  },
+};
+
+// Using bind for function composition
+const calculator = {
+  value: 0,
+  add: operations.add.bind(operations),
+  multiply: operations.multiply.bind(operations),
+  chain: operations.chain.bind(operations),
+  result: operations.result.bind(operations),
+};
+</code></pre>
+<h3 id="polyfill-examples"><a class="header" href="#polyfill-examples">Polyfill Examples</a></h3>
+<pre><code class="language-javascript">// Simple bind polyfill (for understanding)
+if (!Function.prototype.bind) {
+  Function.prototype.bind = function (oThis) {
+    if (typeof this !== "function") {
+      throw new TypeError(
+        "Function.prototype.bind - what is trying to be bound is not callable",
+      );
+    }
+
+    const aArgs = Array.prototype.slice.call(arguments, 1);
+    const fToBind = this;
+    const fBound = function () {
+      return fToBind.apply(
+        this instanceof fBound ? this : oThis,
+        aArgs.concat(Array.prototype.slice.call(arguments)),
+      );
+    };
+
+    fBound.prototype = Object.create(this.prototype);
+    return fBound;
+  };
+}
+</code></pre>
+<h2 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h2>
+<h3 id="1-use-arrow-functions-for-lexical-binding"><a class="header" href="#1-use-arrow-functions-for-lexical-binding">1. Use Arrow Functions for Lexical Binding</a></h3>
+<pre><code class="language-javascript">class Timer {
+  constructor() {
+    this.seconds = 0;
+
+    // Arrow function preserves 'this'
+    setInterval(() =&gt; {
+      this.seconds++;
+      console.log(this.seconds);
+    }, 1000);
+  }
+}
+</code></pre>
+<h3 id="2-avoid-overusing-bind-in-render-methods"><a class="header" href="#2-avoid-overusing-bind-in-render-methods">2. Avoid Overusing bind() in Render Methods</a></h3>
+<pre><code class="language-javascript">// Bad - creates new function on every render
+class BadComponent {
+  render() {
+    return &lt;button onClick={this.handleClick.bind(this)}&gt;Click&lt;/button&gt;;
+  }
+}
+
+// Good - bind in constructor
+class GoodComponent {
+  constructor() {
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  render() {
+    return &lt;button onClick={this.handleClick}&gt;Click&lt;/button&gt;;
+  }
+}
+</code></pre>
+<h3 id="3-performance-considerations"><a class="header" href="#3-performance-considerations">3. Performance Considerations</a></h3>
+<pre><code class="language-javascript">// Bind once and reuse
+const boundFunction = someFunction.bind(context);
+
+// Rather than binding multiple times
+// someFunction.bind(context)();
+// someFunction.bind(context)();
+</code></pre>
+<h2 id="common-pitfalls"><a class="header" href="#common-pitfalls">Common Pitfalls</a></h2>
+<h3 id="1-losing-context-in-callbacks"><a class="header" href="#1-losing-context-in-callbacks">1. Losing Context in Callbacks</a></h3>
+<pre><code class="language-javascript">const obj = {
+  name: "MyObject",
+  delay: function () {
+    // Wrong - 'this' will be undefined or window
+    setTimeout(function () {
+      console.log(this.name);
+    }, 1000);
+
+    // Correct - using bind
+    setTimeout(
+      function () {
+        console.log(this.name);
+      }.bind(this),
+      1000,
+    );
+
+    // Modern solution - arrow function
+    setTimeout(() =&gt; {
+      console.log(this.name);
+    }, 1000);
+  },
+};
+</code></pre>
+<h3 id="2-method-references"><a class="header" href="#2-method-references">2. Method References</a></h3>
+<pre><code class="language-javascript">const obj = {
+  value: 42,
+  getValue: function () {
+    return this.value;
+  },
+};
+
+// Wrong - loses context
+const getValue = obj.getValue;
+console.log(getValue()); // undefined
+
+// Correct - maintain context
+const boundGetValue = obj.getValue.bind(obj);
+console.log(boundGetValue()); // 42
+</code></pre>
+<h2 id="modern-alternatives"><a class="header" href="#modern-alternatives">Modern Alternatives</a></h2>
+<h3 id="using-spread-operator-instead-of-apply"><a class="header" href="#using-spread-operator-instead-of-apply">Using Spread Operator Instead of Apply</a></h3>
+<pre><code class="language-javascript">// Old way with apply
+Math.max.apply(null, [1, 2, 3, 4, 5]);
+
+// Modern way with spread
+Math.max(...[1, 2, 3, 4, 5]);
+</code></pre>
+<h3 id="using-arrow-functions-instead-of-bind"><a class="header" href="#using-arrow-functions-instead-of-bind">Using Arrow Functions Instead of Bind</a></h3>
+<pre><code class="language-javascript">// Using bind
+const boundFunction = regularFunction.bind(this);
+
+// Using arrow function (when appropriate)
+const arrowFunction = (...args) =&gt; regularFunction.apply(this, args);
+</code></pre>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<ul>
+<li><strong><code>call()</code></strong>: Invokes function immediately with specified <code>this</code> and individual arguments</li>
+<li><strong><code>apply()</code></strong>: Invokes function immediately with specified <code>this</code> and array of arguments</li>
+<li><strong><code>bind()</code></strong>: Returns new function with specified <code>this</code> and optional pre-filled arguments</li>
+<li>All three methods are crucial for controlling function execution context</li>
+<li>Modern JavaScript provides alternatives like arrow functions and spread operator</li>
+<li>Choose the right method based on whether you need immediate execution or a bound function for later use</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../tsbook/enums.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../tsbook/extend.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../tsbook/enums.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../tsbook/extend.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

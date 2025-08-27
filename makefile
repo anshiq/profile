@@ -5,7 +5,7 @@ TARGET := .profile
 MDBOOK_PROJECTS = configureProjects react rust ts
 
 # Final build output directory
-DIST_DIR = dist
+DIST_DIR = .dist
 
 # Default target
 all: check-deps build
