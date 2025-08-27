@@ -1,0 +1,23 @@
+{
+    "name": "My Portfolio & Blog",
+    "short_name": "Portfolio",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#1a1a1a",
+    "orientation": "portrait",
+    "scope": "/",
+    "description": "A personal portfolio and blog showcasing my work, projects, and thoughts.",
+    "icons": [
+        {
+            "src": "/icons/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
