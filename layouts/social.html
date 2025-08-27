@@ -1,0 +1,9 @@
+<ul class="social-icons">
+  {{ range site.Params.social }}
+    <li>
+      <a href="{{ .url }}" target="_blank" rel="noopener">
+        <i class="icon-{{ .name }}"></i> {{ .name | title }}
+      </a>
+    </li>
+  {{ end }}
+</ul>

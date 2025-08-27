@@ -1,77 +1,87 @@
-baseurl = "http://iamanshik.online"
-title = "Anshik"
-theme = "hugo-coder"
-languagecode = "en"
-defaultcontentlanguage = "en"
+baseURL = 'https://iamanshik.online/'
+languageCode = 'en-us'
+title = 'Anshik Singh'
+theme = 'typo'
 
-
-[pagination]
-pagerSize = 20
-
-[services]
-[services.disqus]
-shortname = "anshiq"
-
-[markup.highlight]
-style = "github-dark"
-
-[params]
-author = "Anshik Singh"
-info = "Full Stack DevOps and Magician"
-description = "Anshik Singh's personal website"
-keywords = "blog,developer,personal"
-avatarurl = "images/avatar.jpg"
-#gravatar = "john.doe@example.com"
-
-faviconSVG = "/img/favicon.svg"
-favicon_32 = "/img/favicon-32x32.png"
-favicon_16 = "/img/favicon-16x16.png"
-
-since = 2019
-
-enableTwemoji = true
-
-colorScheme = "auto"
-hidecolorschemetoggle = false
-
-# customCSS = ["css/custom.css"]
-# customSCSS = ["scss/custom.scss"]
-# customJS = ["js/custom.js"]
+# Google analytics code
+# googleAnalytics = "G-xxxxxxxxx"
 
 [taxonomies]
-category = "categories"
-series = "series"
-tag = "tags"
-author = "authors"
+tag = 'tags'
 
-# Social links
-[[params.social]]
-name = "Github"
-icon = "fa-brands fa-github fa-2x"
-weight = 1
-url = "https://github.com/anshiq/"
+[params]
+# Meta description
+description = "Anshik's Tech Blog"
 
-[[params.social]]
-name = "LinkedIn"
-icon = "fa-brands fa-linkedin-in fa-2x"
-weight = 2
-url = "https://www.linkedin.com/in/anshik-singh-9593ab2a2/"
-[[params.social]]
-name = "Twitter"
-icon = "fa-brands fa-x-twitter fa-2x"
-weight = 3
-url = "https://x.com/anshikthind"
+# Appearance settings
+theme = 'light'
+colorPalette = 'default'
+hideHeader = false
 
-# Menu links
-[[menu.main]]
-name = "Blog"
-weight = 1
-url = "blog/"
-[[menu.main]]
-name = "Notes"
-weight = 1
-url = "blog/"
-[[menu.main]]
-name = "About"
-weight = 2
-url = "about/"
+# Intro on main page, content is markdown
+# homeIntroTitle = 'Hi!'
+homeIntroContent = """
+I am [Anshik Singh](/cv), a Software Engineer Intern at [SilverPush](https://www.silverpush.co/), currently based in India.  
+My interests span across **web development**, **blockchain**, and **system design**.  
+
+To contact me directly, send an email to:  
+*[anshikthind at gmail dot com](mailto:anshikthind@gmail.com)*
+"""
+
+footerContent = """
+`make build all` //[source](https://github.com/anshiq/profile)
+
+---
+
+Powered by [Hugo](https://gohugo.io/) · Theme: [tomfran/typo](https://github.com/tomfran/typo)
+"""
+
+# Collection to display on home
+homeCollectionTitle = 'Posts'
+homeCollection = 'blogs'
+summaryLength = 150
+homeCollectionLimit = 4
+listSummaries = true
+
+# Lists parameters
+paginationSize = 100
+listDateFormat = '2 Jan 2006'
+
+# Breadcrumbs
+[params.breadcrumbs]
+enabled = true
+showCurrentPage = true
+home = "Home"
+
+
+# Main menu pages
+[[params.menu]]
+name = "home"
+url = "/"
+
+[[params.menu]]
+name = "posts"
+url = "/posts"
+[[params.menu]]
+name = "notes"
+url = "/notebook"
+
+
+[[params.menu]]
+name = "about"
+url = "/about"
+
+# Syntax highlight on code blocks
+[markup]
+[markup.highlight]
+style = 'algol'
+
+# Giscus comments
+[params.giscus]
+enable = false
+repo = "user/repo"
+repoid = "repoId"
+category = "General"
+categoryid = "categoryId"
+mapping = "pathname"
+theme = "preferred_color_scheme"
