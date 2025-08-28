@@ -7,7 +7,7 @@ MDBOOK_PROJECTS = configureProjects react rust ts
 # Final build output directory
 DIST_DIR = .dist
 PROFILE_DIR = $(DIST_DIR)/profile
-NOTEBOOK_DIR = $(DIST_DIR)/notebook
+NOTEBOOK_DIR = $(DIST_DIR)/notebooks
 
 # Default target
 all: check-deps build
