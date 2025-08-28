@@ -2,7 +2,7 @@ TARGET := .profile
 .PHONY: check-deps all build clean build-hugo build-mdbooks prod-build serve-hugo serve-mdbook serve-prod
 
 # List of all mdbook projects
-MDBOOK_PROJECTS = configureProjects react rust ts
+MDBOOK_PROJECTS = configureProjects react rust ts golang
 
 # Final build output directory
 DIST_DIR = .dist
