@@ -6,6 +6,8 @@ MDBOOK_PROJECTS = configureProjects react rust ts
 
 # Final build output directory
 DIST_DIR = .dist
+PROFILE_DIR = $(DIST_DIR)/profile
+NOTEBOOK_DIR = $(DIST_DIR)/notebook
 
 # Default target
 all: check-deps build
@@ -28,20 +30,22 @@ build-mdbooks:
 # Production build (everything in one directory)
 prod-build: clean check-deps
 	@echo "🚀 Building production site..."
-	@mkdir -p $(DIST_DIR)
+	@mkdir -p $(PROFILE_DIR) $(NOTEBOOK_DIR)
 
 	@echo "📦 Building Hugo..."
-	@hugo --minify -d $(DIST_DIR)
+	@hugo --minify -d $(PROFILE_DIR)
 
 	@echo "📦 Building mdBook projects..."
 	@for project in $(MDBOOK_PROJECTS); do \
 		echo "Building $$project..."; \
 		cd notebooks/$$project && mdbook build && cd - >/dev/null; \
-		mkdir -p $(DIST_DIR)/notebooks/$$project; \
-		rsync -a notebooks/$$project/book/ $(DIST_DIR)/notebooks/$$project/; \
+		mkdir -p $(NOTEBOOK_DIR)/$$project; \
+		rsync -a notebooks/$$project/book/ $(NOTEBOOK_DIR)/$$project/; \
 	done
 
 	@echo "✅ Production build complete in $(DIST_DIR)/"
+	@echo "   ├── profile/   (Hugo site)"
+	@echo "   └── notebook/  (mdBook projects)"
 
 # Check system dependencies
 REQUIRED_CMDS = git mdbook hugo rsync python3
