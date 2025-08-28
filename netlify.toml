@@ -1,12 +1,17 @@
 [[redirects]]
-  from = "https://ts-notebook.iamanshik.online/*"
-  to = "/ts/:splat"
-  status = 200
-  force = true
+from = "https://ts-notebook.iamanshik.online/*"
+to = "/ts/:splat"
+status = 200
+force = true
 
 [[redirects]]
-  from = "https://golang-notebook.iamanshik.online/*"
-  to = "/golang/:splat"
-  status = 200
-  force = true
+from = "https://golang-notebook.iamanshik.online/*"
+to = "/golang/:splat"
+status = 200
+force = true
 
+[[redirects]]
+from = "https://iamanshik.online/*"
+to = "/profile/:splat"
+status = 200
+force = true
